@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine 💖</title>
+
+<style>
+body{
+  margin:0; height:100vh;
+  background:linear-gradient(135deg,#ffd1dc,#fff0f5);
+  display:flex; justify-content:center; align-items:center;
+  font-family:'Segoe UI',sans-serif; overflow:hidden;
+}
+
+.card{
+  background:#fff; padding:36px; width:340px;
+  border-radius:28px; text-align:center;
+  box-shadow:0 18px 40px rgba(0,0,0,.15);
+}
+
+h1{ color:#ff5d8f; margin:6px 0; }
+p{ color:#555; min-height:42px; }
+
+button{
+  padding:12px 28px; margin:8px;
+  border:none; border-radius:30px;
+  font-size:16px; font-weight:600; cursor:pointer;
+}
+#yes{ background:#ff5d8f; color:#fff; }
+#no{ background:#eee; color:#777; }
+
+.fade{
+  opacity:0; pointer-events:none; transition:.6s;
+}
+
+/* floating emojis */
+.float{
+  position:fixed; bottom:-10px; font-size:26px;
+  animation:up 3.5s linear forwards;
+}
+@keyframes up{
+  to{ transform:translateY(-110vh); opacity:0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+  <h1>😚😚😚😚</h1>
+  <p id="text">Hey Raghav… 💕</p>
+  <button id="yes" onclick="startValentine()">Continue 😊</button>
+</div>
+
+<script>
+const card = document.getElementById("card");
+const text = document.getElementById("text");
+
+const cuteLines = [
+  "Are you sure? 🥺",
+  "Thoda sa soch lo na 💕",
+  "Main wait kar lungi 😊",
+  "Bas ek YES chahiye 🌷"
+];
+
+let noCount = 0;
+
+/* --------- STEP 1: Valentine question --------- */
+function startValentine(){
+  card.innerHTML = `
+    <h1>Raghav 💖</h1>
+    <p id="q1">Will you be my Valentine? 🌸</p>
+    <button id="yes" onclick="valYes()">YES 😊</button>
+    <button id="no" onclick="valNo()">NO 🙈</button>
+  `;
+}
+
+function valNo(){
+  const q = document.getElementById("q1");
+  q.innerText = cuteLines[noCount % cuteLines.length];
+  noCount++;
+  if(noCount >= 4){
+    document.getElementById("no").classList.add("fade");
+    q.innerText = "Okay… ab sirf YES hi bacha hai 😌💗";
+  }
+}
+
+function valYes(){
+  kisses(18,"😚");
+  setTimeout(movieQ, 700);
+}
+
+/* --------- STEP 2: Movie question --------- */
+function movieQ(){
+  noCount = 0;
+  card.innerHTML = `
+    <h1>🍿🎬</h1>
+    <p id="q2">Kya hum ek movie dekhne chal sakte hain? 💕</p>
+    <button id="yes" onclick="movieYes()">YES 😍</button>
+    <button id="no" onclick="movieNo()">NO 🙈</button>
+  `;
+}
+
+function movieNo(){
+  const q = document.getElementById("q2");
+  q.innerText = cuteLines[noCount % cuteLines.length];
+  noCount++;
+  if(noCount >= 4){
+    document.getElementById("no").classList.add("fade");
+    q.innerText = "Hmm… lagta hai YES hi jeet gaya 😌💗";
+  }
+}
+
+function movieYes(){
+  kisses(35,"💋");
+  setTimeout(finalScreen, 900);
+}
+
+/* --------- FINAL --------- */
+function finalScreen(){
+  document.body.innerHTML = `
+    <div style="
+      height:100vh; display:flex; justify-content:center; align-items:center;
+      background:linear-gradient(135deg,#ffd1dc,#fff0f5);
+      font-family:'Segoe UI'; text-align:center;">
+      <div>
+        <h1 style="color:#ff5d8f;">Yayyy 🥹💖</h1>
+        <p style="color:#555; font-size:18px;">
+          Movie date confirmed 🍿🎬<br>
+          Can’t wait, Raghav 💕
+        </p>
+        <p style="margin-top:14px; font-size:20px; color:#ff5d8f; font-weight:600;">
+          Love you my baby 💓
+        </p>
+      </div>
+    </div>`;
+}
+
+/* --------- Emoji generator --------- */
+function kisses(n,emoji){
+  for(let i=0;i<n;i++){
+    const e=document.createElement("div");
+    e.className="float"; e.innerText=emoji;
+    e.style.left=Math.random()*100+"vw";
+    e.style.animationDelay=Math.random()*0.6+"s";
+    document.body.appendChild(e);
+    setTimeout(()=>e.remove(),3500);
+  }
+}
+</script>
+
+</body>
+</html>
